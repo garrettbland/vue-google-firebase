@@ -1,0 +1,27 @@
+{
+  "name": "vue-google-firebase",
+  "version": "0.0.1",
+  "description": "Firebase plugin for Vue",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/garrettbland/vue-google-firebase.git"
+  },
+  "keywords": [
+    "vue",
+    "firebase",
+    "firestore",
+    "google",
+    "plugin",
+    "database"
+  ],
+  "author": "Garrett Bland",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/garrettbland/vue-google-firebase/issues"
+  },
+  "homepage": "https://github.com/garrettbland/vue-google-firebase#readme"
+}
