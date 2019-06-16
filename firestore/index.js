@@ -42,12 +42,18 @@ export default {
 
     async list(collection,query){
 
+    	// Verify required parameters
+    	if(!collection){
+    		console.error('Vue-Google-Firebase error on method "list". Collection is missing from argument.');
+    		return false;
+    	}
+
         // Build query
         var docRef = this.buildQuery(collection,query);
 
         // Create empty array, get documents, push to items array
-        var items = [];
-        docRef.get().then(function(snapshot){
+        var items = await [];
+        let response = await docRef.get().then(function(snapshot){
             snapshot.forEach(function(document){
                 items.push({
                     id:document.id,
@@ -55,11 +61,48 @@ export default {
                 })
             });
         }).catch(function(error){
-            console.error('Vue-Google-Firebase error. ' + error);
+            console.error('Vue-Google-Firebase error on method "list". ' + error);
         });
 
         // Return items array
-        return await items;
+        return items;
+
+    },
+
+    async get(collection,document){
+
+    	// Verify required parameters
+    	if(!collection || !document){
+    		console.error('Vue-Google-Firebase error on method "get". Collection or Document are missing from argument.');
+    		return false;
+    	}
+
+    	// Initialize firestore
+        var db = firebase.firestore();
+
+    	// Build query
+    	var docRef = db.collection(collection).doc(document);
+
+    	// Get single document
+    	var item = await docRef.get().then(function(document){
+
+    		// Check to see if document exists
+    		if(document.exists){
+    			return {
+    				id:document.id,
+    				data:document.data()
+    			};
+    		}else{
+    			return {
+    				message:'Document Not Found'
+    			};
+    		}
+    	}).catch(function(error){
+    		console.error('Vue-Google-Firebase error on method "get". ' + error);
+    	});
+
+    	// Return item object
+    	return item;
 
     }
 

@@ -10,6 +10,8 @@
 
 - [Installation](#package-installation)
 - [Usage](#rocket-usage)
+- [Firestore API](#zap-firestore-api)
+- [Firebase API](#zap-firebase-api)
 - [Support](#hammer_and_wrench-support)
 - [Contributing](#memo-contributing)
 - [License](#scroll-license)
@@ -79,12 +81,13 @@ export default {
 
 ## :zap: Firestore API
 
-Syntax format - **this.$firestore.method(collection,query)**
+Syntax format - **this.$firestore.method(collection,[query | document])**
 
 | Title | Type | Required | Default |
 |--|--|--|--|
-| collection | String | `true` | null |
+| collection | String | `true` | `null` |
 | query | Object | `false` | `{}` |
+| document | String | `true` | `null` |
 
 Note: The query object accepts parameters set by firestore. [Please refer here](https://firebase.google.com/docs/firestore/quickstart) for the official firestore documentation
 
@@ -100,6 +103,14 @@ this.$firestore.list('notes',{
   where:[ "user" ,"==", "garrett" ],
   limit:5
 })
+```
+ - Get single document from collection. Returns a promise.
+```javascript
+this.$firestore.get(collection,document)
+```
+Example. Retrieves single document from notes collection
+```javascript
+this.$firestore.get('notes','DOCUMENT-ID-XXX')
 ```
 
  ## :zap: Firebase API
