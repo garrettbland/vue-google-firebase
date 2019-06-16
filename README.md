@@ -66,7 +66,7 @@ export default {
     getData(){
       var state = this
       
-      // Retrieves collection notes and sets state 'items' array after complete
+      // Retrieves notes collection
       this.$firestore.list('notes').then(function(items){
         state.items = items
       })
@@ -91,13 +91,13 @@ Syntax format - **this.$firestore.method(collection,[query | document])**
 
 Note: The query object accepts parameters set by firestore. [Please refer here](https://firebase.google.com/docs/firestore/quickstart) for the official firestore documentation
 
-**Methods**
+### **Methods**
 
  - Retrieve items from collection. Returns a promise.
 ```javascript
 this.$firestore.list(collection,query)
 ```
-Example. Retrieve collection, specify a where clause, and limit items. 
+Example. Retrieve `notes` collection, specify a where and limit items. 
 ```javascript
 this.$firestore.list('notes',{
   where:[ "user" ,"==", "garrett" ],
@@ -108,12 +108,12 @@ this.$firestore.list('notes',{
 ```javascript
 this.$firestore.get(collection,document)
 ```
-Example. Retrieves single document from notes collection
+Example. Retrieves single document from `notes` collection
 ```javascript
 this.$firestore.get('notes','DOCUMENT-ID-XXX')
 ```
 
- ## :zap: Firebase API
+## :zap: Firebase API
 
 :construction: Still in development, firebase documentation and functionality coming soon
 
