@@ -1,21 +1,26 @@
 'use strict';
 
-import firebase from 'firebase'
+import firebase from 'firebase';
+import firestore from './firestore/index.js'
+
 export default {
 
-
     install(Vue, config){
-        //Vue.component('vue-google-firebase', Ad);
-        this.init(config, Vue);
+        if(config){
+            this.init(config, Vue);
+        }else{
+            console.error('Vue-Google-Firebase error. A config object is required when installing plugin.');
+        }
     },
 
     init(config, Vue){
 
-        console.log('initing...')
-        console.log('config settings...')
-        console.log(config)
+        // Initialize Firebase
+        firebase.initializeApp(config)
 
+        // Set global instance property
+        Vue.prototype.$firestore = firestore
 
-        Vue.prototype.$firebase = config;
+    }
 
 }

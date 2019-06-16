@@ -1,10 +1,10 @@
-# vue-google-firebase ![language](https://img.shields.io/badge/language-javascript-blue.svg)
+# Vue Google Firebase ![language](https://img.shields.io/badge/language-javascript-blue.svg)
 
 > A simple firebase plugin for vue.js.
 
 :fire: Vue plugin to easy implement firebase, firestore, authentication, and more into your vue application.
 
-:warning: ***Still very much in development, not recommended for production.***
+:construction: ***Still in development, new features are still being created.***
 
 ## :books: Table of Contents
 
@@ -18,11 +18,11 @@
 
 1. Install
 ```sh
-npm install vue-google-firebase
+npm install firebase vue-google-firebase
 ```
 or
 ```sh
-yarn add vue-google-firebase
+yarn add firebase vue-google-firebase
 ```
 
 2. Import and install plugin. (example, in *main.js*)
@@ -43,16 +43,68 @@ Vue.use(VueGoogleFirebase,config)
 ```
 
 ## :rocket: Usage
-Vue Google Firebase exposes a global instance property of `$firebase` to use anywhere in your app. Example below 
+Vue Google Firebase exposes a global instance property of both `$firestore` or `$firebase` to use anywhere in your app. Simple example below
 ```html
 <template>
-	<div>
-		<pre>
-			{{$firebase}}
-		</pre>
-	</div>
+  <div>
+    <ul v-for="item in items">
+      <li>{{ item.data.title }}</li>
+    </ul>
+  </div>
 </template>
+<script>
+export default {
+  name:'example',
+  data(){
+    return {
+      items:[]
+    }
+  },
+  methods:{
+    getData(){
+      var state = this
+      
+      // Retrieves collection notes and sets state 'items' array after complete
+      this.$firestore.list('notes').then(function(items){
+        state.items = items
+      })
+    }
+  },
+  mounted(){
+    this.getData()
+  }
+}
+</script>
 ```
+
+## :zap: Firestore API
+
+Syntax format - **this.$firestore.method(collection,query)**
+
+| Title | Type | Required | Default |
+|--|--|--|--|
+| collection | String | `true` | null |
+| query | Object | `false` | `{}` |
+
+Note: The query object accepts parameters set by firestore. [Please refer here](https://firebase.google.com/docs/firestore/quickstart) for the official firestore documentation
+
+**Methods**
+
+ - Retrieve items from collection. Returns a promise.
+```javascript
+this.$firestore.list(collection,query)
+```
+Example. Retrieve collection, specify a where clause, and limit items. 
+```javascript
+this.$firestore.list('notes',{
+  where:[ "user" ,"==", "garrett" ],
+  limit:5
+})
+```
+
+ ## :zap: Firebase API
+
+:construction: Still in development, firebase documentation and functionality coming soon
 
 ## :hammer_and_wrench: Support
 
