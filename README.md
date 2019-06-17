@@ -88,6 +88,7 @@ Syntax format - **this.$firestore.method(collection,[query | document])**
 | collection | String | `true` | `null` |
 | query | Object | `false` | `{}` |
 | document | String | `true` | `null` |
+| item | Object | `true` | `{}` |
 
 Note: The query object accepts parameters set by firestore. [Please refer here](https://firebase.google.com/docs/firestore/quickstart) for the official firestore documentation
 
@@ -106,11 +107,22 @@ this.$firestore.list('notes',{
 ```
  - Get single document from collection. Returns a promise.
 ```javascript
-this.$firestore.get(collection,document)
+this.$firestore.get(collection,documentId)
 ```
 Example. Retrieves single document from `notes` collection
 ```javascript
 this.$firestore.get('notes','DOCUMENT-ID-XXX')
+```
+ - Create document in collection. Returns a promise and newly created document id
+```javascript
+this.$firestore.add(collection,item)
+```
+Example. Create a new document in the `notes` collection
+```javascript
+this.$firestore.add('notes',{
+  title:'Wash Dishes',
+  description:'Make sure to clean and dry the dishes'
+})
 ```
 
 ## :zap: Firebase API

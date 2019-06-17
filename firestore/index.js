@@ -104,6 +104,29 @@ export default {
     	// Return item object
     	return item;
 
+    },
+
+    async add(collection,document){
+
+    	// Initialize firestore
+        var db = firebase.firestore();
+
+        // Create empty response item object
+        var item = await {};
+
+        // Run add firestore method
+        let response = await db.collection(collection).add(document).then(function(docRef){
+        	item = {
+        		message:'Document created successfully',
+        		documentId:docRef.id,
+        	}
+        }).catch(function(error){
+        	console.error('Vue-Google-Firebase error on method "add". ' + error);
+        });
+
+        // Return newly created document
+        return item;
+
     }
 
 }
