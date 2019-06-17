@@ -1,6 +1,6 @@
 {
   "name": "vue-google-firebase",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Firebase plugin for Vue",
   "main": "index.js",
   "scripts": {
