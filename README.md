@@ -41,17 +41,13 @@
 1. Install
 
 ```sh
-
 npm install firebase vue-google-firebase
-
 ```
 
 or
 
 ```sh
-
 yarn add firebase vue-google-firebase
-
 ```
 
   
@@ -59,33 +55,19 @@ yarn add firebase vue-google-firebase
 2. Import and install plugin. (example, in *main.js*)
 
 ```javascript
-
 import  VueGoogleFirebase  from  'vue-google-firebase'
 
-  
-
 let  config  =  {
-
-apiKey:  XXXXXXXXX,
-
-authDomain:  XXXXXXXXX,
-
-databaseURL:  XXXXXXXXX,
-
-projectId:  XXXXXXXXX,
-
-storageBucket:  XXXXXXXXX,
-
-messagingSenderId:  XXXXXXXXX,
-
-appId:  XXXXXXXXX
-
+	apiKey:  XXXXXXXXX,
+	authDomain:  XXXXXXXXX,
+	databaseURL:  XXXXXXXXX,
+	projectId:  XXXXXXXXX,
+	storageBucket:  XXXXXXXXX,
+	messagingSenderId:  XXXXXXXXX,
+	appId:  XXXXXXXXX
 }
 
-  
-
 Vue.use(VueGoogleFirebase,config)
-
 ```
 
   
@@ -95,65 +77,37 @@ Vue.use(VueGoogleFirebase,config)
 Vue Google Firebase exposes a global instance property of both `$firestore` or `$firebase` to use anywhere in your app. Simple example below
 
 ```html
-
 <template>
-
-<div>
-
-<ul  v-for="item in items">
-
-<li>{{ item.data.title }}</li>
-
-</ul>
-
-</div>
-
+	<div>
+		<ul  v-for="item in items">
+			<li>{{ item.data.title }}</li>
+		</ul>
+	</div>
 </template>
 
 <script>
-
 export  default  {
-
-name:'example',
-
-data(){
-
-return  {
-
-items:[]
-
+	name:'example',
+	data(){
+		return  {
+			items:[]
+		}
+	},
+	methods:{
+		getData(){
+			var  state  =  this
+			// Retrieves notes collection
+			this.$firestore.list('notes')
+			.then(function(items){
+				state.items  =  items
+			})
+		}
+	},
+	mounted(){
+		this.getData()
+	}
 }
-
-},
-
-methods:{
-
-getData(){
-
-var  state  =  this
-
-// Retrieves notes collection
-
-this.$firestore.list('notes').then(function(items){
-
-state.items  =  items
-
-})
-
-}
-
-},
-
-mounted(){
-
-this.getData()
-
-}
-
-}
-
 </script>
-
 ```
 
   
@@ -167,18 +121,11 @@ Syntax format - **this.$firestore.method(collection,[query | document])**
   
 
 | Title | Type | Default |
-
-|--|--|--|--|
-
+|--|--|--|
 | collection | String  | `null` |
-
 | query | Object  | `{}` |
-
 | documentId | String  | `null` |
-
 | item | Object  | `{}` |
-
-  
 
 Note: The query object accepts parameters set by firestore. [Please refer here](https://firebase.google.com/docs/firestore/quickstart) for the official firestore documentation
 
@@ -250,7 +197,7 @@ this.$firestore.add('notes',{
 
 ```javascript
 
-this.$firestore.update(collection,documentId,body)
+this.$firestore.update(collection,documentId,item)
 
 ```
 
