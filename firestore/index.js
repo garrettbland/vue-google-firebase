@@ -3,6 +3,7 @@
 import firebase from 'firebase';
 import 'firebase/firestore';
 
+
 export default {
 
 	defaults:{
@@ -11,12 +12,12 @@ export default {
 
 	buildQuery(collection,query){
 
+		// Initialize firestore
+		var db = firebase.firestore();
+
 		// Initial variables
 		var collection = collection;
 		var query = query || {};
-
-        // Initialize firestore
-        var db = firebase.firestore();
 
         // Set collection
         db = db.collection(collection);
@@ -41,6 +42,7 @@ export default {
     },
 
     async list(collection,query){
+		
 
     	// Verify required parameters
     	if(!collection){
@@ -71,14 +73,14 @@ export default {
 
     async get(collection,document){
 
+		// Initialize firestore
+		var db = firebase.firestore();
+
     	// Verify required parameters
     	if(!collection || !document){
     		console.error('Vue-Google-Firebase error on method "get". Collection or Document are missing from argument.');
     		return false;
     	}
-
-    	// Initialize firestore
-        var db = firebase.firestore();
 
     	// Build query
     	var docRef = db.collection(collection).doc(document);
@@ -108,8 +110,8 @@ export default {
 
     async add(collection,document){
 
-    	// Initialize firestore
-        var db = firebase.firestore();
+		// Initialize firestore
+		var db = firebase.firestore();
 
         // Create empty response item object
         var item = await {};
@@ -126,6 +128,39 @@ export default {
 
         // Return newly created document
         return item;
+
+	},
+	
+    async update(collection,document,body){
+
+		// Initialize firestore
+		var db = firebase.firestore();
+
+    	// Verify required parameters
+    	if(!collection || !document){
+    		console.error('Vue-Google-Firebase error on method "get". Collection or Document are missing from argument.');
+    		return false;
+		}
+		
+		// Create empty response item object
+		var item = await {};
+
+    	// Build query
+    	var docRef = db.collection(collection).doc(document);
+
+    	// Update single document
+    	var response = await docRef.update(body).then(function(){
+
+			item = {
+        		message:'Document updated successfully',
+        	}
+			
+    	}).catch(function(error){
+    		console.error('Vue-Google-Firebase error on method "update". ' + error);
+    	});
+
+    	// Return item object
+    	return item;
 
     }
 
